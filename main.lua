@@ -21,14 +21,13 @@ function start()
 	fruit = {}
 	fruit.items = {}
 	fruit.max = 1
-	
-	love.graphics.setBackgroundColor(0,100,0,255)
 end
 
 function love.draw()
 
 	if mode == 0 then
-		love.graphics.setColor(255,255,255,255)
+    love.graphics.setBackgroundColor(0,0.35,0,1)
+		love.graphics.setColor(1,1,1,1)
 		love.graphics.print("SNAKE!",10,10)
 		love.graphics.print("PRESS SPACE TO START",10,30)
 		if player then
@@ -39,30 +38,30 @@ function love.draw()
 
 
 	for i=0,love.graphics.getWidth(),player.size do
-		love.graphics.setColor(0,75,0,255)
+		love.graphics.setColor(0,0.3,0,1)
 		love.graphics.line(i,0,i,love.graphics.getHeight())
 	end
 	for i=0,love.graphics.getHeight(),player.size do
-		love.graphics.setColor(0,75,0,255)
+		love.graphics.setColor(0,0.3,0,1)
 		love.graphics.line(0,i,love.graphics.getWidth(),i)
 	end
 	
 	for i,segment in ipairs(player.segments) do
-		love.graphics.setColor(0,200,0,255)
+		love.graphics.setColor(0,0.78,0,1)
 		love.graphics.rectangle("fill",segment.x,segment.y,player.size,player.size)
-		love.graphics.setColor(0,100,0,255)
+		love.graphics.setColor(0,0.35,0,1)
 		love.graphics.rectangle("line",segment.x,segment.y,player.size,player.size)
 	end
 	
 	
 	for i,item in ipairs(fruit.items) do
-		love.graphics.setColor(0,200,0,255)
+		love.graphics.setColor(0,0.78,0,1)
 		love.graphics.rectangle("fill",item.x,item.y,player.size,player.size)
-		love.graphics.setColor(0,100,0,255)
+		love.graphics.setColor(0,0.35,0,1)
 		love.graphics.rectangle("line",item.x,item.y,player.size,player.size)
 	end
 	
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColor(1,1,1,1)
 	love.graphics.print("SCORE: "..player.score,10,10)
 end
 
@@ -94,12 +93,10 @@ function love.update(dt)
 		end
 	end
 	
-	
 	player.cycle = math.max(0, player.cycle - dt)
 
 	if player.cycle <= 0 then
 		
-
 		table.remove(player.segments,#player.segments)
 		
 		if player.dir == 0 then 
@@ -114,9 +111,6 @@ function love.update(dt)
 		if player.dir == 3 then 
 			table.insert(player.segments,1,{x=player.segments[1].x-player.size, y=player.segments[1].y })
 		end
-		
-		
-		
 		
 		player.cycle = player.speed
 	end
@@ -168,12 +162,10 @@ function love.update(dt)
 	end
 end
 
-
 function love.keypressed(key)
 	if key == "escape" then love.event.quit() end
 	if key == "space" and mode == 0 then start() end
 end
-
 
 function collision(x1,y1,w1,h1, x2,y2,w2,h2)
 	return x1 < x2+w2 and
@@ -181,7 +173,6 @@ function collision(x1,y1,w1,h1, x2,y2,w2,h2)
 		 y1 < y2+h2 and
 		 y2 < y1+h1
 end
-
 
 function math.round(num, idp)
 	local mult = 10^(idp or 0)
